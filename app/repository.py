@@ -10,8 +10,26 @@ PRODUCTS = [
 ]
 
 
-def list_products() -> list[Product]:
-    return PRODUCTS.copy()
+def search_products(
+    q: str | None = None,
+    sort: str | None = None,
+    order: str = "asc",
+) -> list[Product]:
+    products = PRODUCTS.copy()
+
+    if q:
+        needle = q.casefold()
+        products = [
+            product
+            for product in products
+            if needle in product.name.casefold() or needle in product.category.casefold()
+        ]
+
+    if sort is not None:
+        reverse = order == "desc"
+        products.sort(key=lambda product: getattr(product, sort), reverse=reverse)
+
+    return products
 
 
 def get_product(product_id: int) -> Product | None:
