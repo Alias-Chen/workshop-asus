@@ -4,13 +4,13 @@
 
 | Segment | Time |
 |---|---:|
-| Coding agent concepts and Issue -> PR demo | 50 min |
+| Coding agent concepts and Issue -> PR demo | 25 min |
 | Lab 1 | 35 min |
 | Break | 10 min |
 | Security/review concepts and demo | 20 min |
 | Lab 2 | 30 min |
-| Instructions, skills, and hooks demo | 15 min |
-| Lab 3 | 15 min |
+| End-to-End Agent Guardrails concepts and demo | 20 min |
+| Lab 3: End-to-End Agent Guardrails | 35 min |
 | Wrap-up | 5 min |
 
 ## 48-hour preflight
@@ -23,6 +23,8 @@
 - [ ] `copilot-setup-steps.yml` succeeds from the Actions tab.
 - [ ] A complete Lab 1 agent run has been recorded as backup.
 - [ ] A prepared Lab 2 PR produces the expected CodeQL alerts.
+- [ ] Students have repository admin access for creating a repository ruleset.
+- [ ] The `validate` and `analyze` checks have completed at least once so they are selectable.
 - [ ] Venue network reaches GitHub and Python package hosting.
 
 ## Validate the repository

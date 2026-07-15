@@ -1,28 +1,31 @@
 # ASUS AI Coding Agent Workshop
 
-A runnable Python + FastAPI workshop repository for practicing an agentic software
-development workflow:
+這是一個可直接執行的 Python + FastAPI Workshop repository，用來練習完整的
+Agentic Software Development Workflow：
+
+投影片：[ASUS AI Coding Agent Workshop](slides/ASUS-AI-Coding-Agent-Workshop.pptx)
 
 ```text
-Issue -> Copilot coding agent -> Pull request -> CI
-      -> CodeQL + Copilot code review -> Agent remediation
-      -> Repository instructions + Agent Skill + Hook
+Issue → Copilot coding agent → Pull Request → CI
+      → CodeQL + Copilot Code Review → Agent 修復
+      → Repository Instructions + Agent Skill + Hook
+      → Repository Ruleset → Governed Merge
 ```
 
-## Workshop labs
+## Workshop Labs
 
-| Lab | Duration | Outcome |
+| Lab | 時間 | 學習產出 |
 |---|---:|---|
-| [Lab 1: Issue to PR](docs/lab-1-agentic-workflow.md) | 35 min | Deliver search, sorting, and pagination through a coding-agent PR |
-| [Lab 2: Secure review](docs/lab-2-secure-review.md) | 30 min | Triage CodeQL/review findings and remediate an insecure endpoint |
-| [Lab 3: Agent guardrails](docs/lab-3-agent-guardrails.md) | 15 min | Validate repository instructions, a reusable skill, and an agent hook |
+| [Lab 1：Issue to PR](docs/lab-1-agentic-workflow.md) | 35 分鐘 | 透過 Coding Agent PR 完成產品搜尋、排序與分頁功能 |
+| [Lab 2：Secure Review](docs/lab-2-secure-review.md) | 30 分鐘 | 分析 CodeQL / Code Review findings，修復不安全的 API endpoint |
+| [Lab 3：End-to-End Agent Guardrails](docs/lab-3-agent-guardrails.md) | 35 分鐘 | 串接 Agent context、deterministic validation、CI / CodeQL 與 Repository Ruleset |
 
-Instructor preparation is documented in
-[docs/instructor-runbook.md](docs/instructor-runbook.md).
+講師準備與時間配置請參考
+[講師操作手冊](docs/instructor-runbook.md)。
 
-## Local setup
+## 本機環境設定
 
-Python 3.10 or newer is required.
+需要 Python 3.10 或更新版本。
 
 ```bash
 python -m venv .venv
@@ -32,19 +35,19 @@ python scripts/validate.py
 uvicorn app.main:app --reload
 ```
 
-On Windows PowerShell, activate the environment with:
+Windows PowerShell 請使用以下指令啟用 virtual environment：
 
 ```powershell
 .\.venv\Scripts\Activate.ps1
 ```
 
-Open:
+開啟：
 
-- API: <http://127.0.0.1:8000/products>
-- Swagger UI: <http://127.0.0.1:8000/docs>
-- Health check: <http://127.0.0.1:8000/health>
+- API：<http://127.0.0.1:8000/products>
+- Swagger UI：<http://127.0.0.1:8000/docs>
+- Health check：<http://127.0.0.1:8000/health>
 
-## Validation commands
+## 驗證指令
 
 ```bash
 python scripts/validate.py
@@ -52,14 +55,15 @@ pytest -q -m lab1
 ruff check .
 ```
 
-The normal test command excludes the intentionally failing Lab 1 acceptance tests.
-Run `pytest -q -m lab1` while implementing Lab 1.
+一般測試指令會排除初始狀態下刻意失敗的 Lab 1 acceptance tests。
+執行 Lab 1 時，請使用 `pytest -q -m lab1` 驗證實作。
 
-## Important workshop setup
+## Workshop 重要設定
 
-- Use the advanced CodeQL workflow already included in this repository. Do not also
-  enable CodeQL default setup.
-- Coding agent must be enabled for the repository and assigned users.
-- GitHub Actions and Copilot code review must be available in the workshop organization.
-- No real credentials or production data are used in this repository.
+- 使用 repository 內建的 CodeQL advanced setup workflow；請勿同時啟用
+  CodeQL default setup。
+- Repository 與學員帳號必須已啟用 Copilot coding agent。
+- Workshop organization 必須允許 GitHub Actions 與 Copilot Code Review。
+- Repository 必須啟用 Code Scanning，Lab 3 學員需具備 repository admin 權限。
+- 本 repository 不使用真實 credentials 或 production data。
 
