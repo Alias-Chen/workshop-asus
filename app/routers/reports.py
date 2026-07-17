@@ -27,8 +27,9 @@ def sales_report(
     category: str,
     formula: str = Query(default="total", pattern="^total$"),
 ) -> dict[str, object]:
-    connection = create_database()
+    connection = None
     try:
+        connection = create_database()
         rows = connection.execute(
             "SELECT id, name, category, price FROM products WHERE category = ?",
             (category,),
@@ -42,4 +43,5 @@ def sales_report(
     except Exception as exc:
         raise HTTPException(status_code=500, detail="Internal server error") from exc
     finally:
-        connection.close()
+        if connection is not None:
+            connection.close()

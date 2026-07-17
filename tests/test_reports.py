@@ -62,14 +62,23 @@ def test_code_injection_via_formula_is_rejected(client: TestClient) -> None:
         assert response.status_code == 422, f"Expected 422 for formula={payload!r}"
 
 
-def test_error_response_does_not_disclose_stack_trace(client: TestClient) -> None:
-    """Error responses must not contain traceback or implementation details."""
-    # A very long category string to stress the query; the important thing is that
-    # any error path returns a generic message, not a traceback.
+def test_error_response_does_not_disclose_stack_trace(
+    client: TestClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    """A database error must return a generic 500 message, not a stack trace."""
+    import app.routers.reports as reports_module
+
+    def broken_db() -> None:
+        raise RuntimeError("simulated database failure")
+
+    monkeypatch.setattr(reports_module, "create_database", broken_db)
+
     response = client.get("/reports/sales", params={"category": "Laptop"})
 
-    assert response.status_code == 200
+    assert response.status_code == 500
     body_text = response.text
     assert "Traceback" not in body_text
     assert "traceback" not in body_text
     assert "sqlite3" not in body_text
+    assert "simulated" not in body_text
+    assert response.json()["detail"] == "Internal server error"
