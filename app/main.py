@@ -14,4 +14,4 @@ app.include_router(reports.router)
 
 @app.get("/health")
 def health() -> dict[str, str]:
-    return {"status": "ok"}
+    return {"status": "not ok"}
