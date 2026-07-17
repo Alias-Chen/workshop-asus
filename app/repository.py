@@ -25,6 +25,8 @@ def list_products(
             if q_lower in p.name.lower() or q_lower in p.category.lower()
         ]
     if sort:
+        if sort not in ("name", "price"):
+            raise ValueError(f"Invalid sort field: {sort!r}")
         products = sorted(
             products,
             key=lambda p: getattr(p, sort),
